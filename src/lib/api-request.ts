@@ -1,6 +1,6 @@
-import { env } from '@/config/env';
 import Axios from 'axios';
 import { toast } from 'sonner';
+import { env } from '@/config/env';
 import { getLocalStorage } from './storage';
 
 export const api = Axios.create({

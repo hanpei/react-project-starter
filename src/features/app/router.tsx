@@ -1,9 +1,10 @@
+import type { QueryClient } from '@tanstack/react-query';
+import type { AuthContextType } from '@/features/auth/auth-provider';
+
 import { lazy, Suspense } from 'react';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
-import { type AuthContextType, useAuth } from '@/features/auth/auth-provider';
-import type { QueryClient } from '@tanstack/react-query';
+import { useAuth } from '@/features/auth/auth-provider';
 import { routeTree } from '@/routeTree.gen';
-
 import { queryClient } from './provider';
 
 export type MyRouterContext = {

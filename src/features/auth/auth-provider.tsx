@@ -1,13 +1,13 @@
-import type { User } from '@/types/user';
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getUser, login } from './api/auth';
+import { flushSync } from 'react-dom';
 import {
   getLocalStorage,
   removeLocalStorage,
   setLocalStorage,
 } from '@/lib/storage';
 import { CACHE_KEY } from '@/constants';
-import { flushSync } from 'react-dom';
+import { getUser, login } from './api/auth';
+import type { AuthedUser } from './types/user';
 
 export type AuthContextType = {
   token: string | null | undefined;
@@ -16,14 +16,14 @@ export type AuthContextType = {
   isLoading: boolean;
   isAuthed: boolean;
   // 当前登录用户, null 表示未登录, undefined 表示正在加载
-  currentUser: User | null | undefined;
+  currentUser: AuthedUser | null | undefined;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [token, setToken] = useState<string | null | undefined>();
-  const [currentUser, setCurrentUser] = useState<User | null | undefined>(
+  const [currentUser, setCurrentUser] = useState<AuthedUser | null | undefined>(
     undefined
   );
 

@@ -1,6 +1,5 @@
-import type { User } from '@/types/user';
-
-const testUser: User = {
+import type { AuthedUser } from '../types/user';
+const testUser: AuthedUser = {
   id: '1',
   username: 'test',
 };

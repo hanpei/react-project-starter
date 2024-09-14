@@ -1,7 +1,8 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
 import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from '@/features/auth/auth-provider';
-
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from '@/features/theme/theme-provider';
 
 // eslint-disable-next-line react-refresh/only-export-components
@@ -23,6 +24,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           <AuthProvider>{children}</AuthProvider>
           <Toaster />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </ThemeProvider>
     </>
