@@ -6,7 +6,7 @@ export function useLogin() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const router = useRouter();
-  const search = useSearch({ from: '/login/' });
+  const search = useSearch({ from: '/login' });
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {

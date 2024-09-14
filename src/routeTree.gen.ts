@@ -11,12 +11,17 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as LoginImport } from './routes/login'
 import { Route as AuthedImport } from './routes/_authed'
 import { Route as IndexImport } from './routes/index'
-import { Route as LoginIndexImport } from './routes/login/index'
 import { Route as AuthedDashboardImport } from './routes/_authed/dashboard'
 
 // Create/Update Routes
+
+const LoginRoute = LoginImport.update({
+  path: '/login',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const AuthedRoute = AuthedImport.update({
   id: '/_authed',
@@ -25,11 +30,6 @@ const AuthedRoute = AuthedImport.update({
 
 const IndexRoute = IndexImport.update({
   path: '/',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LoginIndexRoute = LoginIndexImport.update({
-  path: '/login/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -56,19 +56,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthedImport
       parentRoute: typeof rootRoute
     }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginImport
+      parentRoute: typeof rootRoute
+    }
     '/_authed/dashboard': {
       id: '/_authed/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof AuthedDashboardImport
       parentRoute: typeof AuthedImport
-    }
-    '/login/': {
-      id: '/login/'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginIndexImport
-      parentRoute: typeof rootRoute
     }
   }
 }
@@ -89,44 +89,44 @@ const AuthedRouteWithChildren =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '': typeof AuthedRouteWithChildren
+  '/login': typeof LoginRoute
   '/dashboard': typeof AuthedDashboardRoute
-  '/login': typeof LoginIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '': typeof AuthedRouteWithChildren
+  '/login': typeof LoginRoute
   '/dashboard': typeof AuthedDashboardRoute
-  '/login': typeof LoginIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/_authed': typeof AuthedRouteWithChildren
+  '/login': typeof LoginRoute
   '/_authed/dashboard': typeof AuthedDashboardRoute
-  '/login/': typeof LoginIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '' | '/dashboard' | '/login'
+  fullPaths: '/' | '' | '/login' | '/dashboard'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '' | '/dashboard' | '/login'
-  id: '__root__' | '/' | '/_authed' | '/_authed/dashboard' | '/login/'
+  to: '/' | '' | '/login' | '/dashboard'
+  id: '__root__' | '/' | '/_authed' | '/login' | '/_authed/dashboard'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthedRoute: typeof AuthedRouteWithChildren
-  LoginIndexRoute: typeof LoginIndexRoute
+  LoginRoute: typeof LoginRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthedRoute: AuthedRouteWithChildren,
-  LoginIndexRoute: LoginIndexRoute,
+  LoginRoute: LoginRoute,
 }
 
 export const routeTree = rootRoute
@@ -143,7 +143,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/_authed",
-        "/login/"
+        "/login"
       ]
     },
     "/": {
@@ -155,12 +155,12 @@ export const routeTree = rootRoute
         "/_authed/dashboard"
       ]
     },
+    "/login": {
+      "filePath": "login.tsx"
+    },
     "/_authed/dashboard": {
       "filePath": "_authed/dashboard.tsx",
       "parent": "/_authed"
-    },
-    "/login/": {
-      "filePath": "login/index.tsx"
     }
   }
 }

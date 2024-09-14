@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { queryOptions, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 
 /*
@@ -24,11 +24,18 @@ interface DemoResponse {
   thumbnailUrl: string;
 }
 
-async function getDemos(): Promise<DemoResponse[]> {
+export const demosQueryOptions = ({ limit }: { limit?: number } = {}) => {
+  return queryOptions({
+    queryKey: limit ? ['discussions', { limit }] : ['discussions'],
+    queryFn: () => getDemos(limit),
+  });
+};
+
+async function getDemos(limit?: number): Promise<DemoResponse[]> {
   const response = await axios.get<DemoResponse[]>(
     'https://jsonplaceholder.typicode.com/albums/1/photos'
   );
-  return response.data.slice(0, 4);
+  return response.data.slice(0, limit ?? 4);
 }
 
 export function useGetDemos() {

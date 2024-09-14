@@ -1,6 +1,5 @@
-import { Button } from '@/components/ui/button';
-import { DemoList } from '@/features/demo/demo-list';
 import { createFileRoute, Link } from '@tanstack/react-router';
+import { Button } from '@/components/ui/button';
 
 export const Route = createFileRoute('/')({
   component: () => <IndexPage />,
@@ -13,7 +12,6 @@ const IndexPage = () => {
       <Link to="/dashboard">
         <Button>Go to Dashboard</Button>
       </Link>
-      <DemoList />
     </div>
   );
 };

@@ -5,7 +5,8 @@ import { lazy, Suspense } from 'react';
 import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { useAuth } from '@/features/auth/auth-provider';
 import { routeTree } from '@/routeTree.gen';
-import { queryClient } from './provider';
+import { NotFound } from '@/components/not-found';
+import { queryClient } from './react-query';
 
 export type MyRouterContext = {
   auth: AuthContextType;
@@ -21,7 +22,8 @@ const router = createRouter({
   defaultPreload: 'intent',
   // // Since we're using React Query, we don't want loader calls to ever be stale
   // // This will ensure that the loader is always called when the route is preloaded or visited
-  // defaultPreloadStaleTime: 0,
+  defaultPreloadStaleTime: 0,
+  defaultNotFoundComponent: NotFound,
 });
 
 declare module '@tanstack/react-router' {

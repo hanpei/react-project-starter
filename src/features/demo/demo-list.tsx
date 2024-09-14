@@ -1,13 +1,9 @@
-import { useGetDemos } from './api/use-get-demos';
-
-export function DemoList() {
-  const { data } = useGetDemos();
-
-  if (!data) return null;
+export function DemoList({ items }: { items: DemoCardProps[] }) {
+  if (!items) return null;
 
   return (
-    <div className="container grid grid-cols-4 gap-4 ">
-      {data.map((item) => (
+    <div className="grid w-1/2 grid-cols-4 gap-4 ">
+      {items.map((item) => (
         <DemoCard key={item.id} {...item} />
       ))}
     </div>
