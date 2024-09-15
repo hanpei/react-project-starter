@@ -1,4 +1,5 @@
 import type { AuthedUser } from '../types/user';
+import { queryOptions } from '@tanstack/react-query';
 const testUser: AuthedUser = {
   id: '1',
   username: 'test',
@@ -17,6 +18,14 @@ export async function getUser() {
   const token = generateAuthToken();
 
   return { token, user: testUser } as const;
+}
+
+export function userQueryOptions() {
+  return queryOptions({
+    queryKey: ['user'],
+    queryFn: () => getUser(),
+    staleTime: Infinity, // 永远不过期
+  });
 }
 
 // TODO: 实际的登录逻辑

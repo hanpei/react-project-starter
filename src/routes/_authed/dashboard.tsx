@@ -3,7 +3,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { useLogout } from '@/features/auth/hooks/use-logout';
 import { DemoList } from '@/features/demo/demo-list';
-import { demosQueryOptions } from '@/features/demo/api/use-get-demos';
+import { demosQueryOptions } from '@/features/demo/api/get-demos';
 
 export const Route = createFileRoute('/_authed/dashboard')({
   loader: (opts) =>
@@ -13,8 +13,8 @@ export const Route = createFileRoute('/_authed/dashboard')({
 
 const HomePage = () => {
   const logout = useLogout();
-  const demosQuery = useSuspenseQuery(demosQueryOptions());
-  const items = demosQuery.data;
+  const { data: items } = useSuspenseQuery(demosQueryOptions());
+
   const navigate = useNavigate();
   return (
     <div className="flex-col w-screen h-screen space-y-4 flex-center">
