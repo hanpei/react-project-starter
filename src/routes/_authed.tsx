@@ -1,33 +1,37 @@
-import { createFileRoute, Navigate, Outlet } from '@tanstack/react-router';
-import { Spinner } from '@/components/spinner';
-import { useAuth } from '@/features/auth/auth-provider';
+import {
+  createFileRoute,
+  Outlet,
+  redirect,
+} from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authed')({
+  beforeLoad: ({ context }) => {
+    const { isAuthed } = context.auth;
+    if (!isAuthed) {
+      throw redirect({
+        to: '/login',
+        search: {
+          redirectTo: location.pathname,
+        },
+      });
+    }
+  },
   component: ProtectRoute,
 });
 
 function ProtectRoute() {
-  const { isLoading, isAuthed } = useAuth();
+  // const { isAuthed } = useAuth();
 
-  if (isLoading) {
-    return (
-      <div className="flex-col w-screen h-screen space-x-3 flex-center">
-        <Spinner />
-        <h3>checking auth...</h3>
-      </div>
-    );
-  }
-
-  if (!isAuthed) {
-    return (
-      <Navigate
-        to="/login"
-        search={{
-          redirectTo: location.pathname,
-        }}
-      />
-    );
-  }
+  // if (!isAuthed) {
+  //   return (
+  //     <Navigate
+  //       to="/login"
+  //       search={{
+  //         redirectTo: location.pathname,
+  //       }}
+  //     />
+  //   );
+  // }
 
   return <Outlet />;
 }

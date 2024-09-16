@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useRouter, useSearch } from '@tanstack/react-router';
 import { useAuth } from '../auth-provider';
+import { sleep } from '@/lib/utils';
 
 export function useLogin() {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ export function useLogin() {
 
     if (success) {
       await router.invalidate();
-
+      await sleep(1);
       navigate({ to: search.redirectTo ?? '/', replace: true });
     }
   };

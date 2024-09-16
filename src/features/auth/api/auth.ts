@@ -1,31 +1,14 @@
-import type { AuthedUser } from '../types/user';
-import { queryOptions } from '@tanstack/react-query';
-const testUser: AuthedUser = {
+import type { User } from '../types/user';
+import { api } from '@/lib/api-request';
+
+const testUser: User = {
   id: '1',
   username: 'test',
 };
 
-export async function getUser() {
-  await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  // // 随机决定是否失败
-  // const isFailure = Math.random() < 0.5;
-
-  // if (isFailure) {
-  //   throw new Error('登录失败');
-  // }
-
-  const token = generateAuthToken();
-
-  return { token, user: testUser } as const;
-}
-
-export function userQueryOptions() {
-  return queryOptions({
-    queryKey: ['user'],
-    queryFn: () => getUser(),
-    staleTime: Infinity, // 永远不过期
-  });
+export async function getUser(): Promise<User> {
+  const res = await api.get<User>('/user');
+  return res.data;
 }
 
 // TODO: 实际的登录逻辑

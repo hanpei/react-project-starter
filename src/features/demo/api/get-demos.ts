@@ -31,7 +31,7 @@ export const demosQueryOptions = ({ limit }: { limit?: number } = {}) => {
   });
 };
 
-async function getDemos(limit?: number): Promise<DemoResponse[]> {
+async function getDemos(limit?: number) {
   const response = await axios.get<DemoResponse[]>(
     'https://jsonplaceholder.typicode.com/albums/1/photos'
   );
