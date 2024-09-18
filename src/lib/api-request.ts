@@ -4,10 +4,15 @@ import { toast } from 'sonner';
 import { env } from '@/config/env';
 import { CACHE_KEY } from '@/constants';
 import { getLocalStorage, removeLocalStorage } from './storage';
+import { mockApi } from './api-mocks';
 
 export const api: AxiosInstance = Axios.create({
   baseURL: env.API_URL,
 });
+
+if (env.MOCK_API) {
+  mockApi();
+}
 
 /**
  * Request Interceptors
