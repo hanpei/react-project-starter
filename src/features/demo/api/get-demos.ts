@@ -1,5 +1,5 @@
+import { api } from '@/lib/api-request';
 import { queryOptions, useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 
 /*
 {
@@ -32,9 +32,7 @@ export const demosQueryOptions = ({ limit }: { limit?: number } = {}) => {
 };
 
 async function getDemos(limit?: number) {
-  const response = await axios.get<DemoResponse[]>(
-    'https://jsonplaceholder.typicode.com/albums/1/photos'
-  );
+  const response = await api.get<DemoResponse[]>('/albums/1/photos');
   return response.data.slice(0, limit ?? 4);
 }
 

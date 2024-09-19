@@ -1,10 +1,13 @@
 import type { User } from '@/features/auth/types/user';
 import MockAdapter from 'axios-mock-adapter';
-import { api } from './api-request';
+import { AxiosInstance } from 'axios';
 
-export function mockApi() {
+export function mockApi(api: AxiosInstance) {
   // 创建模拟适配器
-  const mock = new MockAdapter(api, { delayResponse: 1000 }); // 1秒延迟
+  const mock = new MockAdapter(api, { delayResponse: 1000,
+    onNoMatch: 'passthrough'
+
+  }); // 1秒延迟
 
   // 设置模拟响应
   // mock.onGet('/user').reply(401);

@@ -6,12 +6,12 @@ import { CACHE_KEY } from '@/constants';
 import { getLocalStorage, removeLocalStorage } from './storage';
 import { mockApi } from './api-mocks';
 
-export const api: AxiosInstance = Axios.create({
+const api: AxiosInstance = Axios.create({
   baseURL: env.API_URL,
 });
 
 if (env.MOCK_API) {
-  mockApi();
+  mockApi(api);
 }
 
 /**
@@ -60,3 +60,5 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export { api };

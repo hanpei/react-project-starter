@@ -1,5 +1,4 @@
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { useSuspenseQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { useLogout } from '@/features/auth/hooks/use-logout';
 import { DemoList } from '@/features/demo/demo-list';
@@ -14,7 +13,6 @@ export const Route = createFileRoute('/_authed/dashboard')({
 
 const HomePage = () => {
   const logout = useLogout();
-  const { data: items } = useSuspenseQuery(demosQueryOptions());
   const user = useCurrentUser();
   const navigate = useNavigate();
   return (
@@ -23,7 +21,7 @@ const HomePage = () => {
       <div>Protected Page</div>
       <h1>Dashboard</h1>
       <div>{user?.username ?? ''}</div>
-      <DemoList items={items} />
+      <DemoList  />
 
       <Button onClick={logout}>Logout</Button>
     </div>
